@@ -1,20 +1,23 @@
-/* =====================================
+/* =========================================
    CONFIGURACIÓN GENERAL
-===================================== */
-
-:root {
-    --rosa: #ffd4e8;
-    --rosa-fuerte: #f3a9d0;
-    --lila: #d9b8f3;
-    --morado: #8b62b5;
-    --morado-oscuro: #63417e;
-    --aqua: #bceee9;
-    --crema: #fff9fc;
-    --texto: #76557e;
-}
+========================================= */
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --turquesa: #63d2dd;
+    --azul: #48b8d0;
+    --rosa: #f5a8d2;
+    --rosa-fuerte: #df77b4;
+    --lila: #b9a0e9;
+    --verde: #bde5b5;
+    --crema: #fff9ed;
+    --blanco: #ffffff;
+    --texto: #68547f;
 }
 
 html {
@@ -22,721 +25,1137 @@ html {
 }
 
 body {
-    margin: 0;
     min-height: 100vh;
+    overflow-x: hidden;
+
     font-family: "Trebuchet MS", Arial, sans-serif;
     color: var(--texto);
-    background: #f7e8ff;
-    overflow-x: hidden;
+
+    background: #c4f0ed;
+}
+
+button {
+    font-family: inherit;
 }
 
 
-/* =====================================
-   TELÓN DE APERTURA
-===================================== */
+/* =========================================
+   PORTADA
+========================================= */
 
-#portada {
+.portada {
     position: fixed;
     inset: 0;
     z-index: 1000;
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     overflow: hidden;
-    background: #b995db;
-}
+    isolation: isolate;
 
-.escenario {
-    position: relative;
-    z-index: 4;
-    width: min(90%, 550px);
-    padding: 35px 22px;
-    text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.65);
-    border-radius: 35px;
     background:
-        radial-gradient(circle at top, #fff5fc, transparent 65%),
-        linear-gradient(145deg, #f8d9ed, #d8c3f5 55%, #bceee9);
-    box-shadow: 0 0 55px rgba(255, 255, 255, 0.5);
+        radial-gradient(
+            circle at 15% 20%,
+            #fff5fa 0,
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #67d5e0,
+            #b8a2ec 55%,
+            #f6abd5
+        );
 }
 
-.decoracion-escenario {
-    font-size: clamp(25px, 7vw, 40px);
-    margin-bottom: 15px;
-    animation: brillo 2s ease-in-out infinite alternate;
+.fondo-portada {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    pointer-events: none;
 }
 
-.texto-pequeno {
-    font-size: 13px;
-    letter-spacing: 2px;
+.decoracion {
+    position: absolute;
+    font-size: clamp(2rem, 6vw, 4rem);
+    animation: flotarDecoracion 4s ease-in-out infinite;
+}
+
+.decoracion-1 {
+    top: 8%;
+    left: 8%;
+}
+
+.decoracion-2 {
+    top: 12%;
+    right: 9%;
+    animation-delay: 0.8s;
+}
+
+.decoracion-3 {
+    bottom: 12%;
+    left: 10%;
+    animation-delay: 1.2s;
+}
+
+.decoracion-4 {
+    bottom: 10%;
+    right: 10%;
+    animation-delay: 1.8s;
+}
+
+@keyframes flotarDecoracion {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(5deg);
+    }
+}
+
+
+/* =========================================
+   MENSAJE DE PORTADA
+========================================= */
+
+.mensaje-portada {
+    position: relative;
+    z-index: 30;
+
+    width: min(90%, 560px);
+    max-height: 92vh;
+    overflow-y: auto;
+
+    padding: 30px 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+    color: white;
+
+    background: rgba(255, 255, 255, 0.16);
+
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 32px;
+
+    box-shadow:
+        0 15px 40px rgba(79, 73, 133, 0.18),
+        inset 0 0 25px rgba(255, 255, 255, 0.2);
+
+    backdrop-filter: blur(7px);
+
+    animation: aparecerMensaje 1s ease both;
+}
+
+.flores-portada {
+    margin-bottom: 12px;
+    font-size: 2rem;
+}
+
+.texto-aloha {
+    margin-bottom: 8px;
+
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 4px;
     text-transform: uppercase;
 }
 
-.escenario h1 {
-    margin: 12px 0;
-    font-family: Georgia, serif;
-    font-size: clamp(35px, 8vw, 52px);
-    color: var(--morado);
-    text-shadow: 2px 3px 0 white;
+.mensaje-portada h1 {
+    margin-bottom: 10px;
+
+    font-size: clamp(2rem, 7vw, 3.7rem);
+    line-height: 1.15;
+
+    text-shadow:
+        0 3px 0 #dc80bc,
+        0 7px 12px rgba(70, 60, 120, 0.2);
 }
 
-.subtitulo-escenario {
-    max-width: 350px;
-    margin: 0 auto 25px;
-    line-height: 1.6;
+.adorno-portada {
+    margin: 8px 0;
+    font-size: 2rem;
 }
 
-#abrirInvitacion {
-    padding: 15px 22px;
-    border: 0;
-    z-index: 5;
-    border-radius: 30px;
-    color: white;
-    font-size: 15px;
+.nombre-portada {
+    margin: 8px 0;
+
+    font-size: clamp(2rem, 7vw, 3rem);
     font-weight: bold;
+
+    color: #fff7ba;
+
+    text-shadow: 0 3px 8px rgba(82, 60, 120, 0.2);
+}
+
+.texto-portada {
+    max-width: 390px;
+    margin: 10px 0 24px;
+
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.texto-portada strong {
+    color: #fff5a6;
+    font-size: 1.6em;
+}
+
+.nota-portada {
+    margin-top: 18px;
+
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   BOTÓN DE APERTURA
+========================================= */
+
+.boton-abrir {
+    position: relative;
+    z-index: 40;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    padding: 15px 22px;
+
+    border: 3px solid white;
+    border-radius: 50px;
+
+    color: white;
+    background: linear-gradient(
+        135deg,
+        #29bfd4,
+        #9c7be3,
+        #ee8ec4
+    );
+
+    font-size: 1rem;
+    font-weight: bold;
+
     cursor: pointer;
-    background: linear-gradient(135deg, #a778d0, #e9a5d0);
-    box-shadow: 0 6px 0 #9569b7, 0 12px 25px #a778d055;
-    transition: transform 0.2s, box-shadow 0.2s;
+
+    box-shadow: 0 8px 20px rgba(70, 65, 130, 0.25);
+
+    transition: transform 0.25s ease;
 }
 
-#abrirInvitacion:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 9px 0 #9569b7, 0 15px 30px #a778d066;
+.boton-abrir:hover {
+    transform: translateY(-3px) scale(1.04);
 }
 
-#abrirInvitacion:active {
-    transform: translateY(3px);
-    box-shadow: 0 2px 0 #9569b7;
+.boton-abrir:active {
+    transform: scale(0.97);
 }
 
-.patitas {
-    margin-top: 25px;
-    font-size: 24px;
+.boton-abrir:focus-visible {
+    outline: 3px solid #fff5a6;
+    outline-offset: 5px;
+}
+
+.boton-abrir:disabled {
+    cursor: default;
 }
 
 
-/* Cortinas */
+/* =========================================
+   CORTINAS
+========================================= */
 
 .cortina {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 52%;
-    z-index: 3;
+
+    width: 50%;
+    z-index: 10;
+
+    pointer-events: none;
+
     background:
-        repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.12) 0,
-            rgba(255, 255, 255, 0.12) 12px,
-            transparent 12px,
-            transparent 30px
-        ),
         linear-gradient(
             90deg,
-            #8d5cb3,
-            #bc83d5 30%,
-            #a16ac5 65%,
-            #76449f
+            rgba(0, 90, 145, 0.25),
+            transparent 30%,
+            rgba(255, 255, 255, 0.12)
+        ),
+        linear-gradient(
+            180deg,
+            #168ab9,
+            #48cbd9 35%,
+            #a37ce3 75%,
+            #ed9bcf
         );
-    box-shadow: inset 0 0 45px rgba(62, 25, 85, 0.3);
-    transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
+
+    box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.1);
+
+    transition:
+        transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.cortina::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width: 14px;
+
+    background: rgba(255, 255, 255, 0.18);
 }
 
 .cortina-izquierda {
     left: 0;
-    border-right: 4px solid #f4c6e7;
+}
+
+.cortina-izquierda::after {
+    right: 0;
 }
 
 .cortina-derecha {
     right: 0;
-    border-left: 4px solid #f4c6e7;
 }
 
-.borde-cortina {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 18px;
-    background: linear-gradient(
-        90deg,
-        #eec3e6,
-        #fff0fa,
-        #dba7dc
-    );
-    opacity: 0.9;
-}
-
-.cortina-izquierda .borde-cortina {
-    right: 0;
-}
-
-.cortina-derecha .borde-cortina {
+.cortina-derecha::after {
     left: 0;
 }
 
-#portada.abriendo .cortina-izquierda {
-    transform: translateX(-102%);
+.portada.abriendo .cortina-izquierda {
+    transform: translateX(-105%);
 }
 
-#portada.abriendo .cortina-derecha {
-    transform: translateX(102%);
+.portada.abriendo .cortina-derecha {
+    transform: translateX(105%);
 }
 
-#portada.abriendo .escenario {
-    animation: desaparecerEscenario 0.5s ease forwards;
-    animation-delay: 0.15s;
+.portada.abriendo .mensaje-portada {
+    animation: desaparecerMensaje 0.6s ease forwards;
 }
 
-
-/* =====================================
-   INVITACIÓN Y FONDO
-===================================== */
-
-#invitacion {
-    position: relative;
-    isolation: isolate;
-    min-height: 100vh;
-    padding: 35px 16px 50px;
-    overflow: visible;
-    background:
-        radial-gradient(
-            circle at 10% 8%,
-            #fff9fc 0,
-            transparent 24%
-        ),
-        radial-gradient(
-            circle at 90% 28%,
-            #d9f7f0 0,
-            transparent 25%
-        ),
-        linear-gradient(
-            180deg,
-            #f9e3f2 0%,
-            #eee1ff 40%,
-            #fce6f2 75%,
-            #e4f8f4 100%
-        );
-}
-
-
-/* =====================================
-   LUCIÉRNAGAS
-   La capa cubre toda la altura de la página.
-===================================== */
-
-/* CAPA DE LUCIÉRNAGAS */
-
-#invitacion {
-    position: relative;
-    isolation: isolate;
-    min-height: 100vh;
-    overflow: hidden;
-}
-
-#luces-flotantes {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100%;
-    overflow: hidden;
-    z-index: 1;
+.portada.oculta {
+    visibility: hidden;
     pointer-events: none;
 }
 
-.contenido {
-    position: relative;
-    z-index: 2;
-}
-
-.luz-magica {
-    position: absolute;
-    display: block;
-    width: var(--tamano, 6px);
-    height: var(--tamano, 6px);
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0;
-
-    background: var(--color-luz, #fff5a8);
-
-    box-shadow:
-        0 0 7px 2px var(--color-luz, #fff5a8),
-        0 0 18px 5px var(--color-luz, #fff5a8);
-
-    animation:
-        subirLuz var(--duracion, 10s) linear forwards,
-        titilar var(--titileo, 1.5s) ease-in-out infinite alternate;
-}
-
-.luz-magica::after {
-    content: "";
-    position: absolute;
-    inset: 30%;
-    border-radius: 50%;
-    background: #ffffff;
-}
-
-@keyframes subirLuz {
-    0% {
+@keyframes aparecerMensaje {
+    from {
         opacity: 0;
-        transform: translate3d(0, 0, 0) scale(0.5);
+        transform: translateY(20px) scale(0.96);
     }
 
-    10% {
+    to {
         opacity: 1;
-    }
-
-    35% {
-        transform: translate3d(var(--deriva-1, 20px), var(--viaje-35, -200px), 0) scale(1);
-    }
-
-    70% {
-        transform: translate3d(var(--deriva-2, -20px), var(--viaje-70, -400px), 0) scale(0.85);
-    }
-
-    90% {
-        opacity: 0.9;
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate3d(var(--deriva-3, 10px), var(--viaje-total, -600px), 0) scale(0.3);
+        transform: translateY(0) scale(1);
     }
 }
 
-@keyframes titilar {
-    from {
-        filter: brightness(0.7);
-    }
-
-    to {
-        filter: brightness(1.8);
-    }
-}
-
-
-@keyframes titilar {
-    from {
-        filter: brightness(.7);
-    }
-
-    to {
-        filter: brightness(1.8);
-    }
-}
-
-
-
-/* El contenido siempre queda encima de las luces */
-
-.contenido {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 680px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-
-/* =====================================
-   TÍTULOS Y DECORACIÓN
-===================================== */
-
-.corona-magica {
-    margin-bottom: 15px;
-    font-size: 38px;
-    animation: brillo 2.5s infinite alternate;
-}
-
-.texto-superior {
-    margin-bottom: 8px;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.titulo-principal {
-    margin: 0;
-    color: var(--morado);
-    font-family: Georgia, serif;
-    font-size: clamp(40px, 9vw, 64px);
-    line-height: 1.08;
-    text-shadow: 2px 3px 0 #fff;
-}
-
-.titulo-principal span {
-    color: #d884bd;
-    font-style: italic;
-}
-
-.adorno-gatitos {
-    margin: 18px 0;
-    font-size: 23px;
-    letter-spacing: 5px;
-}
-
-
-/* =====================================
-   MARCO DE FOTOGRAFÍA
-===================================== */
-
-.marco-foto {
-    width: min(82%, 340px);
-    margin: 25px auto;
-    padding: 10px;
-    border: 3px solid white;
-    border-radius: 45% 45% 28px 28px;
-    background: linear-gradient(135deg, #eeb7dd, #bdece8);
-    box-shadow:
-        0 0 0 4px #d9b7ed,
-        0 12px 28px rgba(139, 98, 181, 0.18);
-}
-
-.foto-placeholder {
-    min-height: 245px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 45% 45% 20px 20px;
-    background:
-        radial-gradient(circle at 50% 25%, white, transparent 60%),
-        linear-gradient(145deg, #fff0f8, #e7ddff, #d4f4ef);
-}
-
-.foto-placeholder span {
-    font-size: 65px;
-}
-
-.foto-placeholder p {
-    margin: 10px 0 5px;
-    font-family: Georgia, serif;
-    font-size: 20px;
-    color: var(--morado);
-}
-
-.foto-placeholder small {
-    font-size: 11px;
-    opacity: 0.8;
-}
-
-
-/* =====================================
-   EDAD Y NOMBRE
-===================================== */
-
-.edad {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 9px;
-    margin: 20px 0 5px;
-}
-
-.edad p {
-    font-family: Georgia, serif;
-    font-size: 21px;
-    font-style: italic;
-}
-
-.numero-edad {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 65px;
-    height: 65px;
-    border: 3px solid white;
-    border-radius: 50%;
-    color: white;
-    font-family: Georgia, serif;
-    font-size: 40px;
-    background: linear-gradient(145deg, #d98bc7, #9a76ca);
-    box-shadow: 0 0 0 3px #d6b2e9;
-}
-
-.estrella {
-    color: #d99acb;
-    font-size: 25px;
-}
-
-.nombre {
-    margin: 8px 0 18px;
-    color: #a86cbb;
-    font-family: Georgia, serif;
-    font-size: clamp(38px, 10vw, 60px);
-    text-shadow: 2px 3px 0 white;
-    overflow-wrap: anywhere;
-}
-
-.mensaje {
-    max-width: 470px;
-    margin: 0 auto;
-    padding: 0 10px;
-    font-size: 16px;
-    line-height: 1.8;
-}
-
-
-/* =====================================
-   SEPARADOR
-===================================== */
-
-.separador {
-    margin: 30px 0;
-    color: #bb8ad1;
-    font-size: 13px;
-    letter-spacing: 2px;
-}
-
-.separador span {
-    font-size: 18px;
-}
-
-
-/* =====================================
-   TARJETA DEL EVENTO
-===================================== */
-
-.tarjeta-evento {
-    padding: 25px 22px;
-    border: 2px solid rgba(255, 255, 255, 0.95);
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.64);
-    box-shadow:
-        0 10px 35px rgba(139, 98, 181, 0.12),
-        inset 0 0 25px rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(4px);
-}
-
-.decoracion-tarjeta {
-    font-size: 23px;
-}
-
-.tarjeta-evento h2 {
-    margin: 15px 0;
-    color: var(--morado);
-    font-family: Georgia, serif;
-    font-size: 29px;
-}
-
-.texto-evento {
-    margin: 0 auto 25px;
-    max-width: 450px;
-    font-size: 14px;
-    line-height: 1.8;
-}
-
-.dato-evento {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    max-width: 390px;
-    margin: 12px auto;
-    padding: 14px;
-    border-radius: 18px;
-    text-align: left;
-    background: linear-gradient(100deg, #fff0f8, #f2edff);
-}
-
-.icono-dato {
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    font-size: 22px;
-    background: white;
-    box-shadow: 0 3px 10px #b995db30;
-}
-
-.dato-evento h3 {
-    margin: 0 0 5px;
-    color: #9a6bb7;
-    font-size: 15px;
-}
-
-.dato-evento p {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-
-/* =====================================
-   DESPEDIDA
-===================================== */
-
-.despedida {
-    max-width: 420px;
-    margin: 30px auto 20px;
-    font-family: Georgia, serif;
-    font-size: 22px;
-    font-style: italic;
-    line-height: 1.5;
-    color: var(--morado);
-}
-
-.final-decoracion {
-    margin: 20px 0;
-    font-size: 27px;
-    letter-spacing: 3px;
-}
-
-.firma {
-    margin: 25px 0 0;
-    font-size: 14px;
-}
-
-.firma strong {
-    display: block;
-    margin-top: 5px;
-    font-family: Georgia, serif;
-    font-size: 29px;
-    color: #a86cbb;
-}
-
-
-/* =====================================
-   BOTÓN DE MÚSICA
-===================================== */
-
-#botonMusica {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 1000;
-
-    width: 58px;
-    height: 58px;
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-
-    background: linear-gradient(135deg, #D9B5F0, #F3B8DF);
-    color: white;
-    font-size: 27px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    box-shadow: 0 5px 18px rgba(160, 100, 190, 0.35);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#botonMusica:hover {
-    transform: scale(1.12);
-    box-shadow: 0 0 22px rgba(217, 181, 240, 0.8);
-}
-
-#botonMusica:active {
-    transform: scale(0.94);
-}
-
-@media (max-width: 480px) {
-    #botonMusica {
-        width: 50px;
-        height: 50px;
-        right: 12px;
-        bottom: 12px;
-        font-size: 24px;
-    }
-}
-
-
-
-/* =====================================
-   ANIMACIONES GENERALES
-===================================== */
-
-@keyframes brillo {
-    from {
-        filter: brightness(0.9);
-        transform: scale(1);
-    }
-
-    to {
-        filter: brightness(1.2);
-        transform: scale(1.05);
-    }
-}
-
-@keyframes desaparecerEscenario {
+@keyframes desaparecerMensaje {
     to {
         opacity: 0;
         transform: scale(0.92);
     }
 }
 
-@keyframes flotarBoton {
-    0%, 100% {
+
+/* =========================================
+   INTERIOR
+========================================= */
+
+.invitacion {
+    position: relative;
+    display: none;
+
+    min-height: 100vh;
+    padding: 35px 16px 45px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 255, 255, 0.8),
+            transparent 23%
+        ),
+        radial-gradient(
+            circle at 90% 40%,
+            rgba(255, 255, 255, 0.6),
+            transparent 25%
+        ),
+        linear-gradient(
+            145deg,
+            #b8f0e7,
+            #d9cdf7 55%,
+            #ffd6e8
+        );
+}
+
+.invitacion.visible {
+    display: block;
+    animation: aparecerInterior 1s ease both;
+}
+
+@keyframes aparecerInterior {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
         transform: translateY(0);
     }
+}
 
-    50% {
-        transform: translateY(-5px);
+
+/* =========================================
+   DECORACIONES DEL INTERIOR
+========================================= */
+
+.decoracion-interior {
+    position: absolute;
+    z-index: 0;
+
+    opacity: 0.5;
+    pointer-events: none;
+
+    animation: flotarDecoracion 5s ease-in-out infinite;
+}
+
+.decoracion-a {
+    top: 80px;
+    left: 2%;
+    font-size: 3.5rem;
+}
+
+.decoracion-b {
+    top: 280px;
+    right: 2%;
+    font-size: 4rem;
+    animation-delay: 1s;
+}
+
+.decoracion-c {
+    top: 750px;
+    left: 3%;
+    font-size: 3rem;
+    animation-delay: 1.5s;
+}
+
+.decoracion-d {
+    top: 1100px;
+    right: 3%;
+    font-size: 3rem;
+    animation-delay: 0.7s;
+}
+
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.encabezado {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+    margin: 0 auto 30px;
+
+    text-align: center;
+    color: var(--texto);
+}
+
+.guirnalda {
+    margin-bottom: 18px;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+}
+
+.etiqueta-tropical {
+    display: inline-block;
+
+    margin-bottom: 15px;
+    padding: 9px 20px;
+
+    color: white;
+    background: linear-gradient(135deg, #28b9d1, #987be0);
+
+    border-radius: 50px;
+
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.titulo-principal {
+    font-size: clamp(2.1rem, 7vw, 4rem);
+    line-height: 1.15;
+
+    color: #dc78b4;
+
+    text-shadow:
+        0 3px 0 white,
+        0 6px 10px rgba(112, 83, 143, 0.12);
+}
+
+.subtitulo {
+    margin-top: 15px;
+
+    color: #78658d;
+    font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.adorno-tropical {
+    margin-top: 18px;
+    font-size: 2rem;
+}
+
+
+/* =========================================
+   TARJETA PRINCIPAL
+========================================= */
+
+.tarjeta-principal {
+    position: relative;
+    z-index: 2;
+
+    width: min(100%, 650px);
+    margin: 0 auto 35px;
+    padding: 32px 25px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 4px solid white;
+    border-radius: 32px;
+
+    box-shadow:
+        0 15px 40px rgba(111, 84, 154, 0.17),
+        inset 0 0 0 2px #f2c0df;
+}
+
+.marco-superior,
+.marco-inferior {
+    font-size: 1.8rem;
+    letter-spacing: 5px;
+}
+
+.corona {
+    margin: 20px 0 12px;
+    font-size: 2.8rem;
+
+    animation: flotarDecoracion 3s ease-in-out infinite;
+}
+
+.texto-presentacion {
+    max-width: 450px;
+    margin: 0 auto 12px;
+
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.nombre-cumpleanera {
+    color: #de78b5;
+    font-size: clamp(2.5rem, 9vw, 4rem);
+
+    text-shadow: 0 3px 0 #ffe1f0;
+}
+
+.edad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    margin: 15px 0;
+}
+
+.numero-edad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 95px;
+    height: 95px;
+
+    color: white;
+
+    font-size: 3.5rem;
+    font-weight: bold;
+
+    background: linear-gradient(
+        135deg,
+        #51cbd7,
+        #a68be9
+    );
+
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+
+    box-shadow: 0 6px 18px rgba(111, 84, 154, 0.2);
+}
+
+.texto-edad {
+    color: #e184b9;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+
+.frase-principal {
+    margin: 18px 0;
+
+    color: #8d71b5;
+    font-size: 1.15rem;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.adorno-corazones {
+    margin: 15px 0;
+    font-size: 1.8rem;
+}
+
+.mensaje-central {
+    max-width: 470px;
+    margin: 0 auto 24px;
+
+    color: #6d5a82;
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+
+/* =========================================
+   CUENTA REGRESIVA
+========================================= */
+
+.seccion-cuenta {
+    position: relative;
+    z-index: 2;
+
+    width: min(100%, 750px);
+    margin: 0 auto 40px;
+    padding: 30px 18px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.55);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 28px;
+
+    box-shadow: 0 10px 25px rgba(111, 84, 154, 0.1);
+}
+
+.adorno-seccion {
+    margin-bottom: 12px;
+    font-size: 1.8rem;
+}
+
+.seccion-cuenta h2 {
+    color: #d875b1;
+    font-size: clamp(1.6rem, 5vw, 2.3rem);
+}
+
+.descripcion-cuenta {
+    margin: 12px 0 22px;
+    font-size: 1rem;
+}
+
+.cuenta-regresiva {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+
+    max-width: 580px;
+    margin: 0 auto;
+}
+
+.unidad-tiempo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 95px;
+    padding: 12px 4px;
+
+    color: white;
+
+    background: linear-gradient(
+        145deg,
+        #42bfd3,
+        #9d83df
+    );
+
+    border: 3px solid white;
+    border-radius: 18px;
+
+    box-shadow: 0 5px 12px rgba(111, 84, 154, 0.15);
+}
+
+.unidad-tiempo span {
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
+
+.unidad-tiempo small {
+    margin-top: 5px;
+    font-size: 0.8rem;
+}
+
+.mensaje-cuenta {
+    margin-top: 22px;
+
+    color: #d875b1;
+    font-weight: bold;
+}
+
+
+/* =========================================
+   INFORMACIÓN DEL EVENTO
+========================================= */
+
+.seccion-evento {
+    position: relative;
+    z-index: 2;
+
+    width: min(100%, 950px);
+    margin: 0 auto 40px;
+
+    text-align: center;
+}
+
+.titulo-seccion {
+    margin-bottom: 12px;
+
+    color: #8d71b5;
+    font-size: clamp(1.8rem, 5vw, 2.7rem);
+}
+
+.subtitulo-seccion {
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.tarjetas-datos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.tarjeta-dato {
+    padding: 25px 16px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 3px solid white;
+    border-radius: 24px;
+
+    box-shadow: 0 10px 25px rgba(111, 84, 154, 0.12);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.tarjeta-dato:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 15px 30px rgba(111, 84, 154, 0.18);
+}
+
+.tarjeta-fecha {
+    border-bottom: 5px solid #6dcfd9;
+}
+
+.tarjeta-hora {
+    border-bottom: 5px solid #e7a0ce;
+}
+
+.tarjeta-lugar {
+    border-bottom: 5px solid #b7a1e9;
+}
+
+.icono-dato {
+    margin-bottom: 12px;
+    font-size: 2.5rem;
+}
+
+.tarjeta-dato h3 {
+    margin-bottom: 12px;
+    color: #9274ba;
+    font-size: 1.15rem;
+}
+
+.dato-principal {
+    color: #d875b1;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.7;
+}
+
+.dato-secundario {
+    margin-top: 5px;
+    color: #78658d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   MENSAJE ESPECIAL
+========================================= */
+
+.seccion-mensaje {
+    position: relative;
+    z-index: 2;
+
+    width: min(100%, 700px);
+    margin: 0 auto 40px;
+    padding: 32px 24px;
+
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        #fff5fb,
+        #effffd
+    );
+
+    border: 3px solid white;
+    border-radius: 30px;
+
+    box-shadow: 0 12px 30px rgba(111, 84, 154, 0.12);
+}
+
+.flores-mensaje {
+    margin-bottom: 18px;
+    font-size: 2rem;
+}
+
+.seccion-mensaje h2 {
+    margin-bottom: 20px;
+
+    color: #dc78b4;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+.seccion-mensaje p {
+    margin: 12px auto;
+
+    max-width: 510px;
+
+    color: #6d5a82;
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+.firma {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    margin-top: 24px;
+
+    color: #8d71b5;
+}
+
+.firma strong {
+    color: #dc78b4;
+    font-size: 1.8rem;
+}
+
+
+/* =========================================
+   DESPEDIDA
+========================================= */
+
+.despedida {
+    position: relative;
+    z-index: 2;
+
+    width: min(100%, 850px);
+    margin: 0 auto;
+    padding: 30px 20px;
+
+    text-align: center;
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #4fc6d6,
+        #a28be6,
+        #ee9dc9
+    );
+
+    border: 3px solid white;
+    border-radius: 30px;
+
+    box-shadow: 0 12px 30px rgba(111, 84, 154, 0.15);
+}
+
+.adorno-despedida {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.despedida h2 {
+    margin-bottom: 14px;
+
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    text-shadow: 0 3px 0 rgba(120, 80, 160, 0.15);
+}
+
+.despedida > p {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.despedida .frase-final {
+    margin-top: 22px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.estrellas-finales {
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+.firma-final {
+    margin-top: 22px;
+    font-size: 0.85rem !important;
+}
+
+
+/* =========================================
+   LUCES FLOTANTES
+========================================= */
+
+.luces-fondo {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.luz-flotante {
+    position: absolute;
+    bottom: -25px;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.6);
+
+    opacity: 0;
+
+    animation: subirLuz linear infinite;
+}
+
+@keyframes subirLuz {
+    0% {
+        transform: translateY(0) scale(0.6);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.9;
+    }
+
+    80% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(-110vh) scale(1.3);
+        opacity: 0;
     }
 }
 
 
-/* =====================================
-   RESPONSIVE
-===================================== */
+/* =========================================
+   BOTÓN DE MÚSICA
+========================================= */
 
-@media (max-width: 480px) {
-    #invitacion {
-        padding: 28px 14px 40px;
+.boton-musica {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2000;
+
+    width: 62px;
+    height: 62px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 3px solid white;
+    border-radius: 50%;
+
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #26bfd3,
+        #a77ae5,
+        #ef91c5
+    );
+
+    box-shadow: 0 6px 20px rgba(91, 74, 144, 0.3);
+
+    cursor: pointer;
+}
+
+.boton-musica:not([hidden]) {
+    display: flex;
+}
+
+.boton-musica[hidden] {
+    display: none !important;
+}
+
+.nota-musical {
+    position: relative;
+    z-index: 2;
+
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.flor-musical {
+    position: absolute;
+    top: -10px;
+    right: -8px;
+
+    font-size: 1.35rem;
+}
+
+.boton-musica.reproduciendo .nota-musical {
+    animation: bailarNota 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes bailarNota {
+    from {
+        transform: rotate(-15deg) scale(1);
     }
 
-    .escenario {
-        padding: 28px 16px;
-    }
-
-    .mensaje {
-        font-size: 15px;
-    }
-
-    .marco-foto {
-        width: 86%;
-    }
-
-    .foto-placeholder {
-        min-height: 220px;
-    }
-
-    .tarjeta-evento {
-        padding: 22px 14px;
-    }
-
-    .tarjeta-evento h2 {
-        font-size: 25px;
-    }
-
-    .dato-evento {
-        padding: 12px;
+    to {
+        transform: rotate(15deg) scale(1.2);
     }
 }
 
 
-/* Respeta la preferencia de reducir animaciones */
+/* =========================================
+   RESPONSIVE: CELULARES
+========================================= */
+
+@media (max-width: 650px) {
+
+    .mensaje-portada {
+        width: 92%;
+        padding: 25px 16px;
+    }
+
+    .texto-aloha {
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+    }
+
+    .texto-portada {
+        font-size: 1rem;
+    }
+
+    .boton-abrir {
+        padding: 14px 16px;
+        font-size: 0.9rem;
+    }
+
+    .invitacion {
+        padding: 25px 12px 35px;
+    }
+
+    .tarjeta-principal {
+        padding: 27px 17px;
+    }
+
+    .tarjetas-datos {
+        grid-template-columns: 1fr;
+        gap: 14px;
+
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .tarjeta-dato {
+        padding: 22px 16px;
+    }
+
+    .cuenta-regresiva {
+        gap: 6px;
+    }
+
+    .unidad-tiempo {
+        min-height: 80px;
+        padding: 8px 2px;
+        border-radius: 13px;
+    }
+
+    .unidad-tiempo small {
+        font-size: 0.7rem;
+    }
+
+    .seccion-cuenta {
+        padding: 25px 10px;
+    }
+
+    .seccion-mensaje {
+        padding: 27px 18px;
+    }
+
+    .boton-musica {
+        width: 55px;
+        height: 55px;
+
+        right: 14px;
+        bottom: 14px;
+    }
+
+    .decoracion-interior {
+        opacity: 0.25;
+    }
+}
 
 @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
     html {
         scroll-behavior: auto;
     }
 
-    .corona-magica,
-    .decoracion-escenario,
-    .boton-musica {
-        animation: none;
-    }
-
     .cortina {
-        transition-duration: 0.5s;
+        transition-duration: 0.4s;
     }
 }

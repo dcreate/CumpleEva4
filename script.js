@@ -1,262 +1,316 @@
-
 document.addEventListener("DOMContentLoaded", () => {
-    // ==========================================
-    // ELEMENTOS DEL HTML
-    // ==========================================
+
+    // =====================================
+    // ELEMENTOS
+    // =====================================
+
     const portada = document.getElementById("portada");
     const botonAbrir = document.getElementById("abrirInvitacion");
+
     const invitacion = document.getElementById("invitacion");
-    const luces = document.getElementById("luces-flotantes");
-    const musica = document.getElementById("musicaFondo");
+
     const botonMusica = document.getElementById("botonMusica");
+    const musica = document.getElementById("musicaFondo");
 
-    // ==========================================
-    // CONFIGURACIÓN
-    // ==========================================
-    const coloresLuces = [
-        "#fff5a8", // Amarillo cálido
-        "#ffffff", // Blanco
-        "#ffd8f1", // Rosa
-        "#c7fff5", // Aqua
-        "#e7c9ff", // Lila
-        "#ffe3b8"  // Dorado suave
-    ];
+    const lucesContenedor = document.getElementById("luces-flotantes");
 
-    let lucesActivas = false;
-    let intervaloLuces = null;
-    let observadorTamanio = null;
+    let invitacionAbierta = false;
+    let lucesCreadas = false;
 
-    // ==========================================
-    // APERTURA DE LA INVITACIÓN
-    // ==========================================
-    if (botonAbrir) {
-        botonAbrir.addEventListener("click", async () => {
-            if (portada && portada.classList.contains("abriendo")) {
-                return;
-            }
 
-            // Iniciar animación de apertura
-            if (portada) {
-                portada.classList.add("abriendo");
-            }
+    // =====================================
+    // INICIALIZACIÓN
+    // =====================================
 
-            // Intentar reproducir la música
-            if (musica) {
-                musica.volume = 0.5;
+    invitacion.classList.remove("visible");
+    invitacion.style.display = "none";
 
-                try {
-                    await musica.play();
-                    actualizarBotonMusica();
-                } catch (error) {
-                    console.warn(
-                        "No se pudo reproducir la música automáticamente.",
-                        error
-                    );
-                }
-            }
+    botonMusica.hidden = true;
 
-            // Mostrar el botón de música
-            if (botonMusica) {
-                botonMusica.hidden = false;
-                botonMusica.style.display = "inline-flex";
-            }
+    document.body.style.overflowY = "hidden";
 
-            // Retirar la portada después de abrir las cortinas
-            window.setTimeout(() => {
-                if (portada) {
-                    portada.classList.add("oculta");
-                    portada.style.display = "none";
-                }
 
-                // Actualizar el tamaño de las luces
-                actualizarAlturaLuces();
+    // =====================================
+    // ABRIR INVITACIÓN
+    // =====================================
 
-                // Iniciar las luces si todavía no están activas
-                iniciarLuces();
-            }, 1900);
-        });
-    }
+    botonAbrir.addEventListener("click", async () => {
 
-    // ==========================================
-    // BOTÓN DE MÚSICA
-    // ==========================================
-    function actualizarBotonMusica() {
-        if (!botonMusica || !musica) return;
-
-        if (musica.paused) {
-            botonMusica.textContent = "🔇";
-            botonMusica.setAttribute("aria-label", "♫");
-        } else {
-            botonMusica.textContent = "🎵";
-            botonMusica.setAttribute("aria-label", "♫");
-        }
-    }
-
-    if (botonMusica && musica) {
-        botonMusica.addEventListener("click", async () => {
-            if (musica.paused) {
-                try {
-                    await musica.play();
-                } catch (error) {
-                    console.warn("No se pudo reproducir la música.", error);
-                }
-            } else {
-                musica.pause();
-            }
-
-            actualizarBotonMusica();
-        });
-
-        musica.addEventListener("play", actualizarBotonMusica);
-        musica.addEventListener("pause", actualizarBotonMusica);
-
-        actualizarBotonMusica();
-    }
-
-    // ==========================================
-    // AJUSTAR ALTURA DEL CONTENEDOR DE LUCES
-    // ==========================================
-    function actualizarAlturaLuces() {
-        if (!invitacion || !luces) return;
-
-        const altura = Math.max(
-            invitacion.scrollHeight,
-            invitacion.offsetHeight,
-            window.innerHeight
-        );
-
-        luces.style.height = `${altura}px`;
-        luces.style.minHeight = `${altura}px`;
-    }
-
-    // ==========================================
-    // CREAR UNA LUCIÉRNAGA
-    // ==========================================
-    function crearLuz() {
-        if (!invitacion || !luces) return;
-
-        actualizarAlturaLuces();
-
-        const altura = luces.clientHeight;
-
-        if (!altura || altura < 1) return;
-
-        const luz = document.createElement("span");
-        luz.className = "luz-magica";
-        luz.setAttribute("aria-hidden", "true");
-
-        const tamano = Math.random() * 5 + 3;
-        const duracion = Math.random() * 7 + 8;
-        const color =
-            coloresLuces[
-                Math.floor(Math.random() * coloresLuces.length)
-            ];
-
-        // Posición horizontal aleatoria
-        luz.style.left = `${Math.random() * 100}%`;
-
-        // Comenzar desde la parte inferior de la invitación
-        luz.style.top = `${altura - 5}px`;
-
-        // Tamaño, color y duración
-        luz.style.setProperty("--tamano", `${tamano}px`);
-        luz.style.setProperty("--color-luz", color);
-        luz.style.setProperty("--duracion", `${duracion}s`);
-        luz.style.setProperty("--titileo", `${Math.random() + 1}s`);
-
-        // Distancias negativas para subir por toda la página
-        luz.style.setProperty("--viaje-35", `${-(altura * 0.35)}px`);
-        luz.style.setProperty("--viaje-70", `${-(altura * 0.70)}px`);
-        luz.style.setProperty("--viaje-total", `${-(altura + 30)}px`);
-
-        // Movimiento lateral suave
-        luz.style.setProperty(
-            "--deriva-1",
-            `${Math.random() * 100 - 50}px`
-        );
-
-        luz.style.setProperty(
-            "--deriva-2",
-            `${Math.random() * 140 - 70}px`
-        );
-
-        luz.style.setProperty(
-            "--deriva-3",
-            `${Math.random() * 180 - 90}px`
-        );
-
-        luces.appendChild(luz);
-
-        // Eliminar la luz cuando termine su recorrido
-        luz.addEventListener("animationend", (evento) => {
-            if (evento.animationName === "subirLuz") {
-                luz.remove();
-            }
-        });
-    }
-
-    // ==========================================
-    // INICIAR EL EFECTO DE LUCIÉRNAGAS
-    // ==========================================
-    function iniciarLuces() {
-        if (!luces || lucesActivas) return;
-
-        lucesActivas = true;
-        actualizarAlturaLuces();
-
-        // Crear luces iniciales para que el efecto comience enseguida
-        for (let i = 0; i < 25; i++) {
-            crearLuz();
-
-            const luz = luces.lastElementChild;
-
-            if (luz) {
-                // Distribuir las luces en diferentes momentos
-                const retraso = -(Math.random() * 8);
-                luz.style.animationDelay = `${retraso}s, 0s`;
-            }
+        if (invitacionAbierta) {
+            return;
         }
 
-        // Generar nuevas luciérnagas continuamente
-        intervaloLuces = window.setInterval(() => {
-            actualizarAlturaLuces();
+        invitacionAbierta = true;
 
-            // Mantener un máximo de 35 luces simultáneas
-            if (luces.childElementCount < 35) {
-                crearLuz();
-            }
-        }, 500);
-    }
+        botonAbrir.disabled = true;
+        botonAbrir.textContent = "¡A disfrutar! 🌺";
 
-    // ==========================================
-    // ACTUALIZAR LAS LUCES SI CAMBIA EL TAMAÑO
-    // ==========================================
-    window.addEventListener("resize", actualizarAlturaLuces);
+        // Inicia la apertura de las cortinas.
+        portada.classList.add("abriendo");
 
-    window.addEventListener("load", () => {
-        actualizarAlturaLuces();
+        // Prepara la invitación mientras las cortinas se abren.
+        window.setTimeout(() => {
+
+            invitacion.style.display = "block";
+
+            requestAnimationFrame(() => {
+                invitacion.classList.add("visible");
+            });
+
+            crearLuces();
+
+            botonMusica.hidden = false;
+
+        }, 650);
+
+
+        // Oculta la portada al terminar la animación.
+        window.setTimeout(() => {
+
+            portada.classList.add("oculta");
+            portada.setAttribute("aria-hidden", "true");
+
+            document.body.style.overflowY = "auto";
+
+        }, 1900);
+
+
+        // Actualiza la cuenta regresiva.
+        actualizarCuentaRegresiva();
+
+
+        // Intenta reproducir la música.
+        try {
+
+            await musica.play();
+            actualizarBotonMusica(true);
+
+        } catch (error) {
+
+            actualizarBotonMusica(false);
+
+            console.info(
+                "La música no se pudo iniciar automáticamente. " +
+                "Puedes activarla con el botón musical."
+            );
+
+        }
+
     });
 
-    // Detectar cambios de tamaño del contenido
-    if ("ResizeObserver" in window && invitacion) {
-        observadorTamanio = new ResizeObserver(() => {
-            actualizarAlturaLuces();
-        });
 
-        observadorTamanio.observe(invitacion);
+    // =====================================
+    // CUENTA REGRESIVA
+    // =====================================
+
+    /*
+      Fecha del evento:
+      17 de diciembre de 2026
+      10:30 de la mañana
+
+      Se utiliza la hora local del dispositivo.
+      En México, Puebla y Veracruz comparten
+      actualmente la zona horaria Centro.
+    */
+
+    const fechaEvento = new Date(
+        "2026-12-17T10:30:00-06:00"
+    ).getTime();
+
+
+    const elementoDias = document.getElementById("dias");
+    const elementoHoras = document.getElementById("horas");
+    const elementoMinutos = document.getElementById("minutos");
+    const elementoSegundos = document.getElementById("segundos");
+
+    const mensajeCuenta = document.getElementById("mensajeCuenta");
+
+
+    function actualizarCuentaRegresiva() {
+
+        const ahora = Date.now();
+        const diferencia = fechaEvento - ahora;
+
+        if (diferencia <= 0) {
+
+            elementoDias.textContent = "000";
+            elementoHoras.textContent = "00";
+            elementoMinutos.textContent = "00";
+            elementoSegundos.textContent = "00";
+
+            if (diferencia > -24 * 60 * 60 * 1000) {
+
+                mensajeCuenta.textContent =
+                    "¡Hoy es el gran día! ¡Feliz cumpleaños, Eva Lucía! 🎂";
+
+            } else {
+
+                mensajeCuenta.textContent =
+                    "¡Gracias por celebrar los 4 añitos de Eva Lucía! 💗";
+
+            }
+
+            return;
+
+        }
+
+        const segundosTotales = Math.floor(diferencia / 1000);
+
+        const dias = Math.floor(
+            segundosTotales / (60 * 60 * 24)
+        );
+
+        const horas = Math.floor(
+            (segundosTotales % (60 * 60 * 24)) / (60 * 60)
+        );
+
+        const minutos = Math.floor(
+            (segundosTotales % (60 * 60)) / 60
+        );
+
+        const segundos = segundosTotales % 60;
+
+
+        elementoDias.textContent = String(dias).padStart(3, "0");
+        elementoHoras.textContent = String(horas).padStart(2, "0");
+        elementoMinutos.textContent = String(minutos).padStart(2, "0");
+        elementoSegundos.textContent = String(segundos).padStart(2, "0");
+
+        mensajeCuenta.textContent =
+            "¡Cada vez falta menos para la aventura! 🌺";
+
     }
 
-    // ==========================================
-    // INICIALIZACIÓN
-    // ==========================================
-    actualizarAlturaLuces();
 
-    // Si la invitación ya está visible, iniciar las luces
-    if (
-        invitacion &&
-        getComputedStyle(invitacion).display !== "none" &&
-        (!portada || getComputedStyle(portada).display === "none")
-    ) {
-        iniciarLuces();
+    // Actualiza cada segundo.
+    actualizarCuentaRegresiva();
+
+    window.setInterval(actualizarCuentaRegresiva, 1000);
+
+
+    // =====================================
+    // CONTROL DE MÚSICA
+    // =====================================
+
+    function actualizarBotonMusica(reproduciendo) {
+
+        botonMusica.classList.toggle(
+            "reproduciendo",
+            reproduciendo
+        );
+
+        botonMusica.setAttribute(
+            "aria-pressed",
+            String(reproduciendo)
+        );
+
+        botonMusica.setAttribute(
+            "aria-label",
+            reproduciendo ? "Pausar música" : "Activar música"
+        );
+
     }
+
+
+    botonMusica.addEventListener("click", async () => {
+
+        if (musica.paused) {
+
+            try {
+
+                await musica.play();
+                actualizarBotonMusica(true);
+
+            } catch (error) {
+
+                actualizarBotonMusica(false);
+
+                console.warn(
+                    "No se pudo reproducir la música. " +
+                    "Verifica el archivo musica.mp3."
+                );
+
+            }
+
+        } else {
+
+            musica.pause();
+            actualizarBotonMusica(false);
+
+        }
+
+    });
+
+
+    musica.addEventListener("play", () => {
+        actualizarBotonMusica(true);
+    });
+
+    musica.addEventListener("pause", () => {
+        actualizarBotonMusica(false);
+    });
+
+
+    // =====================================
+    // LUCES FLOTANTES
+    // =====================================
+
+    function crearLuces() {
+
+        if (lucesCreadas) {
+            return;
+        }
+
+        lucesCreadas = true;
+
+        const cantidadLuces = 35;
+
+        const colores = [
+            "#ffffff",
+            "#fff1a8",
+            "#ffd5ef",
+            "#d7f9ff",
+            "#f7c5ff"
+        ];
+
+        for (let i = 0; i < cantidadLuces; i++) {
+
+            const luz = document.createElement("span");
+
+            luz.className = "luz-flotante";
+
+            const posicion = Math.random() * 100;
+            const tamano = 4 + Math.random() * 7;
+            const duracion = 7 + Math.random() * 10;
+            const retraso = Math.random() * 12;
+
+            const color =
+                colores[Math.floor(Math.random() * colores.length)];
+
+            luz.style.left = `${posicion}%`;
+
+            luz.style.width = `${tamano}px`;
+            luz.style.height = `${tamano}px`;
+
+            luz.style.background = color;
+
+            luz.style.boxShadow =
+                `0 0 12px 3px ${color}99`;
+
+            luz.style.animationDuration = `${duracion}s`;
+            luz.style.animationDelay = `${retraso}s`;
+
+            lucesContenedor.appendChild(luz);
+
+        }
+
+    }
+
+
+    // =====================================
+    // SINCRONIZAR EL ESTADO INICIAL
+    // =====================================
+
+    actualizarBotonMusica(false);
+
 });
